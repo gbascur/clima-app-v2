@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <h1>🌤️ Clima App</h1>
+    </header>
+    <main>
+        <section class="search-section">
+            <h2>Buscar Ciudad</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Santiago, Chile">
+                <button id="searchButton">🔍 Buscar</button>
+            </div>
+        </section>
+        <section id="resultsSection" class="results-section hidden">
+            <h2>Resultados</h2>
+            <div id="results" class="results-container"></div>
+            <div id="map" class="hidden"></div>
+        </section>
+        <section class="history-section">
+            <div class="history-container">
+                <h2>Historial de búsqueda 
+                    <button id="toggleHistoryButton">Ver</button>
+                </h2>
+                <ul id="history" class="hidden"></ul>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Desarrollado por Gaspar Bascur 🌟</p>
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

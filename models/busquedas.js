@@ -40,7 +40,6 @@ class Busquedas{
     async ciudad(lugar = ''){
 
         try {
-            //peticion http
             const intance = axios.create({
                 baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${ lugar }.json`,
                 params: this.paramsMapBox
@@ -62,14 +61,12 @@ class Busquedas{
     async climaLugar( lat, lon ){
         try {
 
-            //instance axios.create
 
             const intance = axios.create({
                 baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`,
                 params: this.paramsOpenWeather
             });
 
-            //resp.data
             const resp = await intance.get();
             const {weather, main} = resp.data;
 
@@ -77,7 +74,8 @@ class Busquedas{
                 desc: weather[0].description,
                 min: main.temp_min,
                 max: main.temp_max,
-                temp: main.temp
+                temp: main.temp,
+                icon: weather[0].icon
             }
             
         } catch (error) {
@@ -92,11 +90,10 @@ class Busquedas{
             return;
         }
 
-        this.historial = this.historial.splice(0,5);
+        // this.historial = this.historial.splice(0,5);
 
         this.historial.unshift( lugar.toLocaleLowerCase() );
 
-        //grabar en DB
         this.guardarDB();
     }
 
@@ -105,6 +102,7 @@ class Busquedas{
         const payload = {
             historial: this.historial
         };
+        console.log('Guardando historial:', payload);  
 
         fs.writeFileSync(this.dbPath, JSON.stringify(payload))
 

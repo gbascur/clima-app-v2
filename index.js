@@ -1,75 +1,70 @@
-require('dotenv').config()
-const { inquirerMenu, pausa, leerInput, listarLugares } = require("./helpers/inquirer");
-const Busquedas = require("./models/busquedas");
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const Busquedas = require('./models/busquedas');
 
+const app = express();
+const PORT = 3000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
+const busquedas = new Busquedas();
 
-const main = async() => {
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-    let opt;
+app.post('/buscar', async (req, res) => {
+    const { termino } = req.body;
 
-    const busquedas= new Busquedas();
-    
+    if (!termino) {
+        return res.status(400).json({ error: 'El término de búsqueda es obligatorio.' });
+    }
+    const lugares = await busquedas.ciudad(termino);
 
-    do {
-        
-        opt = await inquirerMenu();
+    if (lugares.length > 0) {
+        busquedas.agregarHistorial(lugares[0].nombre);
+    }
 
-        switch (opt) {
-            case '1':
-                //mostrar mensaje
-                const termino = await leerInput('Ciudad: ');
-                
-                //buscar los lugares
-                const lugares = await busquedas.ciudad(termino);
+    res.json({ lugares });
+});
 
-                //seleccionar el lugar 
-                const id = await listarLugares(lugares);
-                if ( id ==='0') continue;
+app.post('/clima', async (req, res) => {
+    const { lat, lng } = req.body;
 
-                const lugarSel = lugares.find( l => l.id ===id );
+    if (!lat || !lng) {
+        return res.status(400).json({ error: 'Latitud y longitud son obligatorias.' });
+    }
 
-                //Guardar en DB
-                busquedas.agregarHistorial( lugarSel.nombre)
+    const clima = await busquedas.climaLugar(lat, lng);
+    res.json({ clima });
+});
 
+// app.post('/historial', (req, res) => {
+//     res.json({ historial: busquedas.historialCapitalizado });
+// });
 
+// app.get('/historial', (req, res) => {
+//     res.json({ historial: busquedas.historialCapitalizado });
+// });
 
-                //Clima
+app.get('/historial', (req, res) => {
+    const { page = 1, limit = 10 } = req.query; 
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
 
-                const clima = await busquedas.climaLugar(lugarSel.lat, lugarSel.lng )
+    const paginatedHistorial = busquedas.historialCapitalizado.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(busquedas.historialCapitalizado.length / limit);
 
-                //mostrar resultados
-                console.clear();
-                console.log('\nInformacion de la ciudad\n'.green);
-                console.log('Ciudad:', lugarSel.nombre.green);
-                console.log('Lat:', lugarSel.lat);
-                console.log('Long:', lugarSel.lng);
-                console.log('Temperatura:',clima.temp);
-                console.log('Minima:', clima.min);
-                console.log('Maxima:', clima.max);
-                console.log('Como esta el clima:', clima.desc);
+    res.json({
+        historial: paginatedHistorial,
+        totalPages,
+        currentPage: Number(page),
+    });
+});
 
-                
-            break;
-            case '2':
-                busquedas.historial.forEach( (lugar, i) => {
-                    const idx = ` ${ i + 1 }`.green;
-                    console.log(`${ idx } ${lugar} `);
-                })
-                
-            break;
-            case 0:
-                
-            break;
-        }
-
-
-
-
-        if (opt !== '0' ) await pausa(); 
-    } while ( opt !== '0')
-
-}
-
-main();
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});

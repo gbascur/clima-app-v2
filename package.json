@@ -1,10 +1,10 @@
 {
-  "name": "05-clima-app",
+  "name": "clima-app-v2",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,7 +13,8 @@
   "dependencies": {
     "axios": "^0.27.2",
     "colors": "^1.4.0",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "inquirer": "^8.2.4"
   }
 }

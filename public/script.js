@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const paginationContainer = document.createElement('div');
     paginationContainer.id = 'pagination';
     let currentPage = 1;
-    let map; // Variable para el mapa
+    let map;
 
     toggleHistoryButton.addEventListener('click', () => {
         if (historyList.classList.contains('hidden')) {
@@ -96,14 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
     
-                // Mostrar el mapa
                 mostrarMapa(lugar.lat, lugar.lng, lugar.nombre);
     
-                // Configurar botón "Volver"
                 const backButton = document.getElementById('backButton');
                 backButton.addEventListener('click', limpiarResultados);
     
-                // Animación para los resultados
                 document.getElementById('resultsSection').classList.remove('hidden');
                 document.getElementById('resultsSection').classList.add('visible');
             });
@@ -114,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mostrarMapa = (lat, lng, nombre) => {
         const mapContainer = document.getElementById('map');
-        mapContainer.classList.add('visible'); // Mostrar el mapa
-        mapContainer.innerHTML = ''; // Limpiar cualquier contenido previo
+        mapContainer.classList.add('visible'); 
+        mapContainer.innerHTML = ''; 
 
         const map = L.map(mapContainer).setView([lat, lng], 13);
 
@@ -133,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultsSection.classList.add('hidden');
         searchInput.value = '';
         mapDiv.classList.add('hidden');
-        if (map) map.remove(); // Elimina el mapa para evitar duplicados
+        if (map) map.remove(); 
         map = null;
     };
 

@@ -1,7 +1,7 @@
 {
   "name": "clima-app-v2",
   "version": "1.0.0",
-  "description": "",
+  "description": "app para consultar el clima de una ciudad",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",

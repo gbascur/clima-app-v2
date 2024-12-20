@@ -1,7 +1,7 @@
-# <div align= center>Aplicación de Clima en consola</div>
+# <div align= center>Aplicación de Clima en Navegador Web</div>
 
 <br>
-<div align=center>Este proyecto todavia esta en desarrollo, su primera version era clima-app, primeramente fue desarollado con puro JS para luego en la version 2, pasarlo a navegador y que fuera agradable a la visualización
+<div align=center>Este proyecto se encuentra actualmente en fase de desarrollo. Su versión inicial, denominada clima-app, fue implementada originalmente utilizando JavaScript puro. Posteriormente, en su segunda versión, se realizó una migración para optimizar su funcionamiento en navegadores web, mejorando significativamente la experiencia visual del usuario.
 </div>
 
 <br>
@@ -36,7 +36,6 @@
 
 </div>
 
-<
 
 <h3 align="center"><strong>Entorno de Desarrolo:</strong></h3>
 
@@ -57,7 +56,6 @@
 
 <div align="center">
   <img src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" style="margin: 0 10px;">
-  <img src="https://img.shields.io/badge/railway-%230062DF.svg?style=for-the-badge&logo=railway&logoColor=white" alt="Railway" style="margin: 0 10px;">
 </div>
 
 
@@ -97,3 +95,6 @@ pnpm start
 bun start
 ```
 Abrir http://localhost:3000 en tu navegador para ver los resultados
+
+
+[Demo](https://clima-app-v2-two.vercel.app/)
